@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class GreetingController {
 
-    SearchServiceConfig config;
+    private SearchServiceConfig config;
 
     @Autowired
     public GreetingController(SearchServiceConfig config) {
