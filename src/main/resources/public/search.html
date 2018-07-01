@@ -91,7 +91,7 @@
         function preview_image(src) {
             $('.thumbnail').show();
             var d = new Date();
-            $('#fileState').text('file '+src + ': ' + d.getTime());
+            $('#fileState').text('upload completed at :'+src.toString() + ': ' + d.toString());
         }
 
         function show_error(error) {
