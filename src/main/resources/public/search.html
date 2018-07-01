@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Landing Page - Start Bootstrap Theme</title>
+    <title>Search service ui</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -107,8 +107,8 @@
 <!-- Navigation -->
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-        <a class="navbar-brand" href="#upload">Upload file</a>
-        <a class="navbar-brand" href="#download">DownLoad File</a>
+        <a class="navbar-brand" href="#upload">Upload File</a>
+        <a class="navbar-brand" href="#download">Download File</a>
         <a class="navbar-brand" href="#search">Search File</a>
         <div id="port" th:text="${port}" style='display:none'/>
         <div id="host" th:text="${host}" style='display:none'/>
@@ -118,7 +118,7 @@
 <!-- Masthead -->
 <header class="masthead text-black text-center">
     <div class="container">
-        <h1>Upload file to StorageService</h1>
+        <h1>Upload File to StorageService</h1>
         <script>
             $(document).ready(function () {
                 var host = $("#host").text();
@@ -225,6 +225,8 @@
                 $.get(url, function (data) {
                     $("#searchResults").val(data);
                     console.log("Load was performed.");
+                }).fail(function() {
+                    $("#searchResults").val("search elements were not found");
                 });
             });
         });
@@ -261,8 +263,8 @@
 <!-- Footer -->
 <footer class="navbar navbar-light bg-light static-top">
     <div class="container">
-        <a class="navbar-brand" href="#upload">Upload file</a>
-        <a class="navbar-brand" href="#download">DownLoad File</a>
+        <a class="navbar-brand" href="#upload">Upload File</a>
+        <a class="navbar-brand" href="#download">Download File</a>
         <a class="navbar-brand" href="#search">Search File</a>
     </div>
 </footer>
