@@ -4,8 +4,6 @@ package com.search.service.ui;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 @SpringBootApplication
 public class UiApplication {
