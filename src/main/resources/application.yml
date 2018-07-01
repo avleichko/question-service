@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: searchservice-ui
+  thymeleaf:
+    prefix: classpath:/public/
+    templateResolverOrder: 1
+    suffix: .html
+
+
+serch-service:
+  url: localhost
+  port: 8081
