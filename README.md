@@ -21,6 +21,11 @@ localhost:8080
 
 ### Prerequisites
 
+ui was designed to work with service. it can be downloaded here:
+
+```
+https://github.com/avleichko/searchservice.git
+```
 
 ```
 java >= 1.8
