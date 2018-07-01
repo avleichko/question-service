@@ -37,7 +37,7 @@ mvn >= 3.5.3
 
 ```
 ui sends data to remote service. 
-This service can work only with csv files .
+This service can work only with txt files .
 file size needs to be less then 30mb.
 thiese limitations could be changed on serach service side (update application.yml required)
 
