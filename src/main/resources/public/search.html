@@ -49,8 +49,6 @@
                 if(frm.find('#txtFile[type="file"]').length === 1 ){
                     data.append('file', frm.find( '#txtFile' )[0].files[0]);
                 }
-
-                data.append('title',frm.find('#txtTitle').val());
                 var ajax  = new XMLHttpRequest();
                 ajax.upload.addEventListener('progress',function(evt){
                     var percentage = (evt.loaded/evt.total)*100;
@@ -118,7 +116,7 @@
 </nav>
 
 <!-- Masthead -->
-<header class="masthead text-white text-center">
+<header class="masthead text-black text-center">
     <div class="container">
         <h1>Upload file to StorageService</h1>
         <script>
@@ -131,11 +129,7 @@
         </script>
          <div class="jumbotron">
              <form id="frm" action="#" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label>Title</label>
-                    <input type="text" class="form-control" id="txtTitle" name="txtTitle" placeholder="optional text field to show posting data along with image" />
-                </div>
-                <div class="form-group">
+                 <div class="form-group">
                     <label>Select Image to upload</label>
                     <input type="file" class="form-control" id="txtFile" name="txtFile" />
                 </div>
