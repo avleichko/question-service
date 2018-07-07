@@ -9,3 +9,6 @@ spring:
     templateResolverOrder: 1
     suffix: .html
 
+quiz-service:
+  url: localhost
+  port: 8080

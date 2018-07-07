@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:application.yml")
-@ConfigurationProperties(prefix = "serch-service")
+@ConfigurationProperties(prefix = "quiz-service")
 @Data
 @Slf4j
 public class SearchServiceConfig {

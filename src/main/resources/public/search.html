@@ -41,14 +41,6 @@
 
 <body>
 
-<!-- Navigation -->
-<nav class="navbar navbar-light bg-light static-top">
-    <div class="container">
-        <div id="port" th:text="${port}" style='display:none'/>
-        <div id="host" th:text="${host}" style='display:none'/>
-    </div>
-</nav>
-
 <!-- Masthead -->
 <header class="masthead text-black text-center">
     <div class="container">
@@ -63,48 +55,34 @@
 <section class="testimonials text-center bg-light">
     <script>
         $(document).ready(function () {
-            $("#downloadFile").click(function () {
-                var host = $("#host").text();
-                var port = $("#port").text();
-                var searchkeys = $("#downloadFileName").val();
-                var url = "http://" + host + ":" + port + "/search/download" + "?file=" + searchkeys;
 
-                $.ajax({
-                    url: url,
-                    method: 'GET',
-                    xhrFields: {
-                        responseType: 'blob'
-                    },
-                    success: function (data) {
-                        var a = document.createElement('a');
-                        var url = window.URL.createObjectURL(data);
-                        a.href = url;
-                        a.download = 'dataset.txt';
-                        a.click();
-                        window.URL.revokeObjectURL(url);
-                    }
-                });
+            var host = $("#host").text();
+            var port = $("#port").text();
+            var path = "/question/show"
+            var url = "http://" + host + ":" + port + path;
+
+            alert(url);
+            $.get(url, function (data) {
+                $("#questionArea").html(data);
+                console.log("Load was performed.");
+            }).fail(function () {
+                $("#searchResults").val("search elements were not found");
             });
+
         });
 
     </script>
     <div class="container" id="download">
         <div class="row">
+            <div id="port" th:text="${port}" style='display:none'/>
+            <div id="host" th:text="${host}" style='display:none'/>
             <div class="col-xl-9 mx-auto">
                 <h1 class="mb-5">Get txt file by name</h1>
             </div>
             <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
                 <form>
                     <div class="form-row">
-                        <div class="col-12 col-md-9 mb-2 mb-md-0">
-                            <input type="text" id="downloadFileName" class="form-control form-control-lg"
-                                   placeholder="please write your file name here...">
-                        </div>
-                        <div class="col-12 col-md-3">
-                            <button type="button" id="downloadFile" class="btn btn-block btn-lg btn-primary">Download
-                                File
-                            </button>
-                        </div>
+                        <div id="questionArea"></div>
                     </div>
                 </form>
             </div>
@@ -116,21 +94,21 @@
 <!-- Call to Action -->
 <section class="call-to-action text-white text-center">
     <script>
-        $(document).ready(function () {
-            $("#searchFiles").click(function () {
-                var host = $("#host").text();
-                var port = $("#port").text();
-                var searchkeys = $("#searchParams").val();
-                var url = "http://" + host + ":" + port + "/search" + "?searchParams=" + searchkeys;
+        /*  $(document).ready(function () {
+              $("#searchFiles").click(function () {
+                  var host = $("#host").text();
+                  var port = $("#port").text();
+                  var searchkeys = $("#searchParams").val();
+                  var url = "http://" + host + ":" + port + "/search" + "?searchParams=" + searchkeys;
 
-                $.get(url, function (data) {
-                    $("#searchResults").val(data);
-                    console.log("Load was performed.");
-                }).fail(function() {
-                    $("#searchResults").val("search elements were not found");
-                });
-            });
-        });
+                  $.get(url, function (data) {
+                      $("#searchResults").val(data);
+                      console.log("Load was performed.");
+                  }).fail(function() {
+                      $("#searchResults").val("search elements were not found");
+                  });
+              });
+          });*/
     </script>
     <div class="overlay"></div>
     <div class="container" id="search">

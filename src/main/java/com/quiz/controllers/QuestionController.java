@@ -5,10 +5,7 @@ import com.quiz.dto.QuestionDto;
 import com.quiz.services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,19 +20,21 @@ public class QuestionController {
     }
 
     @PostMapping("/question/add")
+    @CrossOrigin(origins = "*")
     @ResponseStatus(HttpStatus.CREATED)
     public void createQuestion(@RequestBody QuestionDto questionDto) {
         questionService.addQuestion(questionDto);
     }
 
     @PostMapping("/question/checkAnswer")
+    @CrossOrigin(origins = "*")
     public String checkAnswer(@RequestBody List<AnswerDto> answerDto) {
         String s = questionService.checkAnswer(answerDto);
         return s;
     }
 
-
-    @PostMapping("/question/show")
+    @GetMapping("/question/show")
+    @CrossOrigin(origins = "*")
     public QuestionDto get() {
        return questionService.getQuestion();
     }
