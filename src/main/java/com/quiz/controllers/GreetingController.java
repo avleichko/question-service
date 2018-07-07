@@ -1,12 +1,15 @@
-package com.search.quiz;
+package com.quiz.controllers;
 
+import com.quiz.config.SearchServiceConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
+@ApiIgnore
 public class GreetingController {
 
     private SearchServiceConfig config;

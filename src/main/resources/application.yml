@@ -9,8 +9,3 @@ spring:
     templateResolverOrder: 1
     suffix: .html
 
-
-serch-service:
-  url: localhost
-  port: 8081
-
