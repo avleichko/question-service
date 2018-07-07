@@ -13,3 +13,4 @@ spring:
 serch-service:
   url: localhost
   port: 8081
+

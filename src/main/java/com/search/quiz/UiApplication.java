@@ -1,4 +1,4 @@
-package com.search.service.ui;
+package com.search.quiz;
 
 
 import org.springframework.beans.factory.annotation.Value;
