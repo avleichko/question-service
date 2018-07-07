@@ -61,6 +61,7 @@
 
                     <button role="submit">Submit</button>
                 </form>
+                <div id="results"></div>
             </div>
         </div>
     </div>
@@ -112,7 +113,7 @@
         <div class="answers">
             <% _.each(answerDtos, function(o) { %>
             <div class="answer">
-                <input type="checkbox" data-answer="<%- o.answer %>">
+                <input type="checkbox" data-answer="<%- o.answer %>" data-correct="<%- o.correct ? 1 : '' %>">
                 <label><%- o.answer %></label>
             </div>
             <% }); %>
@@ -139,16 +140,21 @@
         form.find('input').each(function() {
             var self = $(this);
             if (self.is(':checked')) {
-                result.push(self.data());
+                var dt = self.data();
+                result.push({
+                    'answer': dt.answer.toString(),
+                    'correct': !!dt.correct
+                });
             }
         });
         query({
             url: window.POST_URL,
             method: 'POST',
             data: JSON.stringify(result),
-            contentType: 'text/json; charset=UTF-8'
+            contentType: 'application/json; charset=UTF-8'
         }).then(function(answer) {
             console.log(answer);
+            $("#results").text(answer);
         });
         return false;
     });
