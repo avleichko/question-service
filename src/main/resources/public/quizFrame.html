@@ -16,8 +16,8 @@
         <div class="result m-2"></div>
 
         <div class="server-state">
-            <h1 style="display: none" class="server-down text-danger">Server is DOWN</h1>
-            <h1 style="display: none" class="server-up text-success">Server is OK</h1>
+            <img src="https://place-hold.it/300x150/ffffff/ff000.png?text=Server%20is%20DOWN&bold&fontsize=24" style="display: none" class="server-down" alt="server-down" />
+            <img src="https://place-hold.it/300x150/ffffff/00ff0.png?text=Server%20is%20UP&bold&fontsize=24" style="display: none" class="server-up" alt="server-up" />
         </div>
     </form>
 </div>
@@ -106,7 +106,7 @@
         var q3 = this.query({
             path: '/ui/config/get'
         }).then(function(style) {
-            self.$items.attr('style', style);
+            self.e.attr('style', style);
         });
         $.when([q1, q2, q3]).then(this.ready);
     };
@@ -144,20 +144,20 @@
                 });
             }
         });
-        //if (data.length) {
+        if (data.length) {
         this.query({
             method: 'POST',
             path: '/question/checkAnswer',
             data: JSON.stringify(data),
             contentType: 'application/json'
         }).then(this.result);
-        //} else {
-        //    alert('Please check some answers');
-        //}
+        } else {
+            alert('Please check some answers');
+        }
         return false;
     };
     Quiz.prototype.result = function(data) {
-        this.$result.text(JSON.stringify(data));
+        this.$result.text(data);
     };
     var quiz = new Quiz({
         e: '#quiz',
