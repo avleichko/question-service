@@ -44,7 +44,7 @@ java -jar ui-0.0.1-SNAPSHOT.jar
 ##### if you are using linux or modern mac then you can start your application by execution sh file start.sh
 ##### this file will build project and launh it 
 ##### application will be started and start.sh will create first question and window config 
-
+##### previous step not required if you are going to use start.sh
 ```
 cd <your_path_to>/start.sh
 e.g. 
