@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -exm
+
 mvn clean install
 
 cd target
@@ -33,5 +35,5 @@ curl -vvv -X POST --header 'Content-Type: application/json' --header 'Accept: */
 
 curl -vvv -X POST --header 'Content-Type: application/json' --header 'Accept: */*' 'http://localhost:8080/ui/config?font=Times%20New%20Roman&color=green&title=question%20title&width=500&height=300'
 
-wait $pid
+fg
 
