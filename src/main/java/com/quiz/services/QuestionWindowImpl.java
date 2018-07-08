@@ -31,8 +31,8 @@ public class QuestionWindowImpl implements QuestionWindow {
         List<UiConfigDao> all = repository.findAll();
         UiConfigDao uiConfigDao = all.stream().findFirst().orElseThrow(() -> new StorageException("Ui config not set"));
 
-        String result = String.format("\"font-family: '%s%n' !important; color: %s%n !important; width: %o !important; height: %o; !important\"",
-                uiConfigDao.getFont(), uiConfigDao.getColor(), uiConfigDao.getWidth(), uiConfigDao.getHeight());
+        String result = String.format("\"font-family: '%s%n' !important; color: %s%n !important; width: %s%n !important; height: %s%n; !important\"",
+                uiConfigDao.getFont(), uiConfigDao.getColor(), uiConfigDao.getWidth().toString(), uiConfigDao.getHeight().toString());
         return result;
     }
 
