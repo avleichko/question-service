@@ -5,6 +5,7 @@ import com.quiz.dao.QuestionDao;
 import com.quiz.dto.AnswerDto;
 import com.quiz.dto.QuestionDto;
 import com.quiz.exceptions.NotValidPayloadException;
+import com.quiz.exceptions.StorageException;
 import com.quiz.repository.AnswerRepository;
 import com.quiz.repository.QuestionRepository;
 import lombok.Data;
@@ -39,17 +40,16 @@ public class QuestionServiceImpl implements QuestionService {
     public void addQuestion(QuestionDto questionDto) {
         answerRepository.deleteAll();
         repository.deleteAll();
+
         QuestionDao dao = new QuestionDao();
 
         dao.setQuestionText(questionDto.getQuestionText());
 
         List<AnswerDto> incomeDtos = questionDto.getAnswerDtos();
 
-
         incomeDtos.stream().filter(AnswerDto::isCorrect).findAny().orElseThrow(() -> new NotValidPayloadException("Question needs to have 1 valid answer"));
 
-        java.lang.reflect.Type targetListType = new TypeToken<List<AnswerDao>>() {
-        }.getType();
+        java.lang.reflect.Type targetListType = new TypeToken<List<AnswerDao>>() {}.getType();
 
         List<AnswerDao> answerDaos = modelMapper.map(incomeDtos, targetListType);
 
@@ -65,7 +65,7 @@ public class QuestionServiceImpl implements QuestionService {
         List<AnswerDao> answers = answerRepository.findAll();
 
         if (question.isEmpty() || answers.isEmpty()) {
-            throw new SecurityException("storage is empty");
+            throw new StorageException("storage is empty");
         }
 
 
@@ -87,7 +87,7 @@ public class QuestionServiceImpl implements QuestionService {
         List<QuestionDao> question = repository.findAll();
         List<AnswerDao> answers = answerRepository.findAll();
         if (question.isEmpty() || answers.isEmpty()) {
-            throw new SecurityException("storage is empty");
+            throw new StorageException("storage is empty");
         }
 
         QuestionDao questionDao = question.stream().findFirst().get();
@@ -95,7 +95,6 @@ public class QuestionServiceImpl implements QuestionService {
         }.getType();
 
         List<AnswerDto> storageAnswerDtos = modelMapper.map(answers, targetListType);
-
 
         QuestionDto questionDto = new QuestionDto();
         questionDto.setQuestionText(questionDao.getQuestionText());

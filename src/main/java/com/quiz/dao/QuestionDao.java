@@ -1,6 +1,5 @@
 package com.quiz.dao;
 
-import com.quiz.dto.AnswerDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

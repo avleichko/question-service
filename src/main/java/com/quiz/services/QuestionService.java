@@ -4,7 +4,6 @@ import com.quiz.dto.AnswerDto;
 import com.quiz.dto.QuestionDto;
 
 import java.util.List;
-import java.util.Set;
 
 public interface QuestionService {
 
