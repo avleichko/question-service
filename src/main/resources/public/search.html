@@ -55,8 +55,8 @@
             <div id="port" th:text="${port}" style='display:none'/>
             <div id="host" th:text="${host}" style='display:none'/>
            <!-- <for class="col-md-10 col-lg-8 col-xl-7 mx-auto">-->
-            <div style="font-family: 'Arial Black' !important; color: #1b1e21 !important; width: 200px !important; height: 300px; !important">
-
+            <div  id="questionBlock">
+                <p id="questionHeader"></p>
                 <form id="form">
                     <div id="target" class="form-row"></div>
 
@@ -78,23 +78,6 @@
                 <h2 class="mb-4">Search txt files by search keys</h2>
             </div>
             <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-                <!--<form>
-                    <div class="form-row">
-                        <div class="col-12 col-md-9 mb-2 mb-md-0">
-                            <input type="text" id="searchParams" class="form-control form-control-lg"
-                                   placeholder="Enter your search keys...">
-                        </div>
-                        <div class="col-12 col-md-3">
-                            <button type="button" id="searchFiles" class="btn btn-block btn-lg btn-primary">Search
-                            </button>
-                        </div>
-                        <div class="col-12 col-md-12 mb-2 mb-md-0">
-                            <br/>
-                            <textarea class="form-control form-control-lg" id="searchResults"
-                                      placeholder="search results will be displayed here" readonly="true"></textarea>
-                        </div>
-                    </div>
-                </form>-->
             </div>
         </div>
     </div>
@@ -172,7 +155,25 @@
         $('#target').append(renderQuestion(q));
     });
 </script>
+<script>
+    $(function() {
+        var host = $("#host").text();
+        var port = $("#port").text();
+        var path1 = "/ui/config/get/getTitle"
+        var path2 = "/ui/config/get"
 
+        var GET_URL_CSS = "http://" + host + ":" + port + path2;
+        var GET_URL = "http://" + host + ":" + port + path1;
+
+        $.get( GET_URL, function( data ) {
+            $( "#questionHeader" ).html( data );
+        });
+
+        $.get( GET_URL_CSS, function( data ) {
+            $( "#questionBlock" ).attr("style", data );
+        });
+    });
+</script>
 </body>
 
 </html>
