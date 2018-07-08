@@ -1,128 +1,169 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom fonts for this template -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
-          type="text/css">
-
-    <!-- Custom styles for this template -->
-    <link href="css/landing-page.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-
 <body>
+<div class="container">
+    <form id="quiz">
+        <h1 class="header"></h1>
+        <div class="items"></div>
 
-    <div id="download" width=" 100%">
-        <div>
-            <div id="port" th:text="${port}" style='display:none'/>
-            <div id="host" th:text="${host}" style='display:none'/>
-            <!-- <for class="col-md-10 col-lg-8 col-xl-7 mx-auto">-->
-            <div  id="questionBlock">
-                <p align="left" id="questionHeader"></p>
-                <form id="form">
-                    <div id="target" class="form-row"></div>
+        <button type="submit" class="btn btn-primary">Submit</button>
 
-                    <button role="submit" class="btn btn-block btn-lg btn-primary">Check your answer</button>
-                </form>
-                <div id="results"></div>
-            </div>
+        <div class="result m-2"></div>
+
+        <div class="server-state">
+            <h1 style="display: none" class="server-down text-danger">Server is DOWN</h1>
+            <h1 style="display: none" class="server-up text-success">Server is OK</h1>
         </div>
-    </div>
-
-<script type="template/html" id="questionTpl">
+    </form>
+</div>
+<script type="template/html" id="quizTemplate">
     <div class="question">
-        <h1><%- questionText %></h1>
-        <div class="answers">
+        <h2><%- questionText %></h2>
+        <div class="answers form-group">
             <% _.each(answerDtos, function(o) { %>
             <div class="answer">
-                <input type="checkbox" data-answer="<%- o.answer %>">
-                <label><%- o.answer %></label>
+                <input type="checkbox" class="form-check-input" data-answer="<%- o.answer %>" data-correct="<%- o.correct ? 1 : '' %>">
+                <label class="form-check-label"><%- o.answer %></label>
             </div>
             <% }); %>
         </div>
     </div>
 </script>
-<!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
 <script type="text/javascript">
+    function Quiz(options) {
+        _.defaults(this, options);
+        this.base_url = this.base_url.replace(/\/$/g, '');
+        this.server_ok = true;
+        this.e = $(this.e);
+        this.find();
+        this.bind();
+        this.init();
+        this.serverStateChanged();
+    }
+    Quiz.prototype.find = function() {
+        this.$items = this.e.find('.items');
+        this.$header = this.e.find('.header');
+        this.$result = this.e.find('.result');
+        this.$state_down = this.e.find('.server-state .server-down');
+        this.$state_up = this.e.find('.server-state .server-up');
+        this.renderQuiz = _.template($(this.tpl).html());
+    };
+    Quiz.prototype.bind = function() {
+        this.e.submit(_.bind(this.submit, this));
+        _.bindAll(this, [
+            'queryFailed',
+            'queryComplete',
+            'ready',
+            'chaosMonkey',
+            'result'
+        ]);
+    };
+    Quiz.prototype.query = function(params) {
+        var p;
+        // some pre-query code like running spinners?
+        if (!this.server_ok) {
+            p = $.Deferred().
+            reject(null, 'server is down', null).
+            promise();
+        } else {
+            params.url = _.replace(
+                this.base_url + '/' + params.path,
+                '//', '/'
+            );
+            p = $.ajax(params);
+        }
+        return p.
+        fail(this.queryFailed).
+        done(this.queryComplete);
+    };
+    Quiz.prototype.queryComplete = function() {
+        // some post-request tear down code hiding spinners, progress bars etc
+    };
+    Quiz.prototype.queryFailed = function(xhr, err, status) {
+        // some smarter reporting?
+        alert('Query failed: ' + (status || err || 'Unknown error'));
+    };
+    Quiz.prototype.init = function() {
+        var self = this;
+        var q1 = this.query({
+            path: '/question/show'
+        }).then(function(data) {
+            self.$items.html(self.renderQuiz(data));
+        });
+        var q2 = this.query({
+            path: '/ui/config/get/getTitle'
+        }).then(function(title) {
+            self.$header.text(title);
+        });
+        var q3 = this.query({
+            path: '/ui/config/get'
+        }).then(function(style) {
+            self.$items.attr('style', style);
+        });
+        $.when([q1, q2, q3]).then(this.ready);
+    };
+    Quiz.prototype.chaosMonkey = function() {
+        var old = this.server_ok;
+        this.server_ok = !this.server_ok;
 
-    var host = $("#host").text();
-    var port = $("#port").text();
-    var path1 = "/question/show"
-    var path2 = "/question/checkAnswer"
-
-    var POST_URL = "http://" + host + ":" + port + path2;
-    var GET_URL = "http://" + host + ":" + port + path1;
-
-    var renderQuestion = _.template($('#questionTpl').html());
-    var form = $('#form').submit(function() {
-        var result = [];
-        form.find('input').each(function() {
+        if (old != this.server_ok) {
+            this.serverStateChanged();
+        }
+        setTimeout(this.chaosMonkey, parseInt(Math.random() * 3 + 20) * 1000);
+    };
+    Quiz.prototype.serverStateChanged = function() {
+        if (this.server_ok) {
+            this.$state_up.show();
+            this.$state_down.hide();
+        } else {
+            this.$state_up.hide();
+            this.$state_down.show();
+        }
+    };
+    Quiz.prototype.ready = function() {
+        /// start chaos monkey
+        this.chaosMonkey();
+    };
+    Quiz.prototype.submit = function() {
+        this.$result.html('');
+        var data = [];
+        this.$items.find('input[data-answer]').each(function() {
             var self = $(this);
             if (self.is(':checked')) {
-                var dt = self.data();
-                result.push({
-                    'answer': dt.answer.toString(),
-                    'correct': true
+                data.push({
+                    answer: self.data('answer').toString(),
+                    correct: true
                 });
             }
         });
-        query({
-            url: window.POST_URL,
+        //if (data.length) {
+        this.query({
             method: 'POST',
-            data: JSON.stringify(result),
-            contentType: 'application/json; charset=UTF-8'
-        }).then(function(answer) {
-            console.log(answer);
-            $("#results").text(answer);
-        });
+            path: '/question/checkAnswer',
+            data: JSON.stringify(data),
+            contentType: 'application/json'
+        }).then(this.result);
+        //} else {
+        //    alert('Please check some answers');
+        //}
         return false;
-    });
-    function query(params) {
-        // pre-request setup
-        return $.ajax(params).
-        fail(function(xhr, status, err) {
-            alert('Request failed: ' + (err || status || 'Unknown error'));
-        }).done(function() {
-            // post-request (any outcome) tear down
-        });
-    }
-    query({url: GET_URL}).then(function(q) {
-        $('#target').append(renderQuestion(q));
-    });
-</script>
-<script>
-    $(function() {
-        var host = $("#host").text();
-        var port = $("#port").text();
-        var path1 = "/ui/config/get/getTitle"
-        var path2 = "/ui/config/get"
-
-        var GET_URL_CSS = "http://" + host + ":" + port + path2;
-        var GET_URL = "http://" + host + ":" + port + path1;
-
-        $.get( GET_URL, function( data ) {
-            $( "#questionHeader" ).html( data );
-        });
-
-        $.get( GET_URL_CSS, function( data ) {
-            $( "#questionBlock" ).attr("style", data );
-        });
+    };
+    Quiz.prototype.result = function(data) {
+        this.$result.text(JSON.stringify(data));
+    };
+    var quiz = new Quiz({
+        e: '#quiz',
+        tpl: '#quizTemplate',
+        base_url: '/'
     });
 </script>
 </body>
-
 </html>
