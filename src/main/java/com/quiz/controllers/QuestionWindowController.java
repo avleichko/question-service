@@ -26,4 +26,10 @@ public class QuestionWindowController {
     public String getConfig() {
        return service.getConfig();
     }
+
+    @GetMapping("/ui/config/get/getTitle")
+    @CrossOrigin(origins = "*")
+    public String getTitle() {
+        return service.getConfig();
+    }
 }

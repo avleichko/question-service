@@ -25,7 +25,7 @@ public class QuestionWindowImpl implements QuestionWindow {
         repository.save(uiConfigDao);
     }
 
-    //TODO fix weidth and height
+
     @Override
     public String getConfig() {
         List<UiConfigDao> all = repository.findAll();
@@ -34,6 +34,13 @@ public class QuestionWindowImpl implements QuestionWindow {
         String result = String.format("\"font-family: '%s%n' !important; color: %s%n !important; width: %s%n !important; height: %s%n; !important\"",
                 uiConfigDao.getFont(), uiConfigDao.getColor(), uiConfigDao.getWidth().toString(), uiConfigDao.getHeight().toString());
         return result;
+    }
+
+    @Override
+    public String getTitle() {
+        List<UiConfigDao> all = repository.findAll();
+        UiConfigDao uiConfigDao = all.stream().findFirst().orElseThrow(() -> new StorageException("Ui config not set"));
+        return uiConfigDao.getTitle();
     }
 
 
