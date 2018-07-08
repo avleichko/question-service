@@ -8,6 +8,20 @@ spring:
     prefix: classpath:/public/
     templateResolverOrder: 1
     suffix: .html
+    datasource:
+      username: sa
+      password:
+      driverClassName: org.h2.Driver
+      url: jdbc:h2:file:./data/app_db;DB_CLOSE_ON_EXIT=FALSE
+    jpa:
+      hibernate:
+        ddl-auto: update
+        show-sql: true
+        properties:
+          hibernate:
+            format_sql: true
+
+
 
 quiz-service:
   url: localhost
