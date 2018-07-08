@@ -146,7 +146,10 @@ quiz-service:
 
 ```
 
-
+## Hot to add question frame to your site 
+```
+<iframe src="http://localhost:8080/quizFrame" width="100%" height="100%" border="0" frameborder="0"/>
+```
 ## Authors
 
 * **Aleksandr Velichko** - *email* - [mrdezzdemon@gmail.com](mrdezzdemon@gmail.com)
