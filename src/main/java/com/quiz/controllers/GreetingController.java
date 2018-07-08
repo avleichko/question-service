@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
@@ -23,6 +24,17 @@ public class GreetingController {
     public String index(Model model) {
 
         return "forward:/search";
+    }
+
+    @GetMapping("/quizFrame")
+    public ModelAndView quiz(Model model) {
+        model.addAttribute("host", config.getUrl());
+        model.addAttribute("port", config.getPort());
+
+        ModelAndView mav = new ModelAndView("quizFrame");
+        mav.addObject("host", config.getUrl());
+        mav.addObject("port", config.getPort());
+        return mav;
     }
 
     @GetMapping("/search")
