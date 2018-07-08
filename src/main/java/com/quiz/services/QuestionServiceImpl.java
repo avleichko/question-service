@@ -64,7 +64,7 @@ public class QuestionServiceImpl implements QuestionService {
         List<QuestionDao> question = repository.findAll();
         List<AnswerDao> answers = answerRepository.findAll();
 
-        if (question.isEmpty() || answers.isEmpty()){
+        if (question.isEmpty() || answers.isEmpty()) {
             throw new SecurityException("storage is empty");
         }
 
@@ -76,7 +76,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         List<AnswerDto> collect = storageAnswerDtos.stream().filter(AnswerDto::isCorrect).collect(Collectors.toList());
         List<String> validAnswersText = collect.stream().map(AnswerDto::getAnswer).collect(Collectors.toList());
-        if (!userAnswerDtos.containsAll(collect)) {
+        if (!collect.containsAll(userAnswerDtos)) {
             return ("Valid answers are :" + validAnswersText.toString());
         }
         return "correct answer";
@@ -86,7 +86,7 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionDto getQuestion() {
         List<QuestionDao> question = repository.findAll();
         List<AnswerDao> answers = answerRepository.findAll();
-        if (question.isEmpty() || answers.isEmpty()){
+        if (question.isEmpty() || answers.isEmpty()) {
             throw new SecurityException("storage is empty");
         }
 
