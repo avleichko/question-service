@@ -29,8 +29,7 @@ public class QuestionController {
     @PostMapping("/question/checkAnswer")
     @CrossOrigin(origins = "*")
     public String checkAnswer(@RequestBody List<AnswerDto> answerDto) {
-        String s = questionService.checkAnswer(answerDto);
-        return s;
+        return questionService.checkAnswer(answerDto);
     }
 
     @GetMapping("/question/show")

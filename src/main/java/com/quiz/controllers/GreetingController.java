@@ -12,7 +12,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public class GreetingController {
 
-    private SearchServiceConfig config;
+    private final SearchServiceConfig config;
 
     @Autowired
     public GreetingController(SearchServiceConfig config) {
