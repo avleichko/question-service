@@ -19,27 +19,12 @@
 
     <!-- Custom styles for this template -->
     <link href="css/landing-page.min.css" rel="stylesheet">
-
-    <style>
-
-        .thumbnail {
-            display: inline-block;
-            margin: 10px auto;
-            width: 300px;
-        }
-
-        .thumbnail, .progress, #error {
-            display: none;
-        }
-    </style>
 </head>
 
 <body>
 
-<!-- Testimonials -->
-<section class="testimonials text-center bg-light">
-    <div class="container" id="download">
-        <div class="row">
+    <div id="download" width=" 100%">
+        <div>
             <div id="port" th:text="${port}" style='display:none'/>
             <div id="host" th:text="${host}" style='display:none'/>
             <!-- <for class="col-md-10 col-lg-8 col-xl-7 mx-auto">-->
@@ -54,7 +39,6 @@
             </div>
         </div>
     </div>
-</section>
 
 <script type="template/html" id="questionTpl">
     <div class="question">
