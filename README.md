@@ -4,7 +4,7 @@ Question service ui provides ui and api for answering a question provided by aut
 
 ## Supporting features 
 * create a question
-* set question div tag header text, font color , font name , div size ,
+* set question div tag header text, font color , font name , div size
 * check if user answers are correct 
 
 ## Limitations 
@@ -39,6 +39,23 @@ then
 java -jar ui-0.0.1-SNAPSHOT.jar
 
 ```
+## Getting Started for linux and mac
+
+##### if you are using linux or modern mac then you can start your application by execution sh file start.sh
+##### this file will build project and launh it 
+##### application will be started and start.sh will create first question and window config 
+
+```
+cd <your_path_to>/start.sh
+e.g. 
+cd /Users/aleksandr.velichko/myProj/quiz-service/start.sh
+
+then ./start.sh
+```
+
+##### Note: unfortunately due to java linux process specific 
+##### skript file execution time will be approximately 20sec 
+
 ## Getting Started
 
 ##### To start work with the service you need to create your first question 
