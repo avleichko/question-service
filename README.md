@@ -10,7 +10,7 @@ Question service ui provides ui and api for answering a question provided by aut
 ## Limitations 
 * since basic requirements were telling about single question, storage operates only with single question and single config
 
-## Requirements
+##  Requirements
 ```
 java >= 1.8
 mvn >= 3.5.3
@@ -41,9 +41,9 @@ java -jar ui-0.0.1-SNAPSHOT.jar
 ```
 ## Getting Started
 
-#####To start work with the service you need to create your first question 
+##### To start work with the service you need to create your first question 
 
-#####to do that you need to send following request to the backend 
+##### to do that you need to send following request to the backend 
 
 ```
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: */*' -d '{ 
